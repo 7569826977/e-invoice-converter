@@ -6,6 +6,7 @@ from PIL import Image
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import pdfplumber  # PDF text okuma
+from tkinter import Tk, filedialog
 
 # Eğer Windows kullanıyorsan Tesseract yolunu belirt
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -27,21 +28,30 @@ def read_invoice(file_path):
             for page in pages:
                 text += pytesseract.image_to_string(page, lang="tur")
     else:
-        text = pytesseract.image_to_string(Image.open(file_path), lang="tur")
+        text = pytesseract.image_to_string(Image.open(file_path), lang="tur+eng")
 
     return text
 
 
+def choose_file():
+    root = Tk()
+    root.withdraw()  # Tk pencereyi gizle
+    file_path = filedialog.askopenfilename(
+        title="Bir dosya seçin",
+        filetypes=[("PDF ve Resimler", "*.pdf;*.png;*.jpg;*.jpeg;*.tiff;*.bmp"), ("Tüm Dosyalar", "*.*")]
+    )
+    return file_path
+
 def extract_invoice_data(text):
     """Regex ile fatura verilerini ayıkla"""
     data = {
-        "FaturaNo": re.search(r"Seri No:\s*([A-Z0-9]+)", text),
-        "VergiNo": re.search(r"Vergi No:\s*(\d+)", text),
-        "MükellefNo": re.search(r"Mükellef No:\s*(\d+)", text),
-        "MükellefAdi": re.search(r"Mükellef Adi:\s*(.+)", text),
-        "VergiDairesiNo": re.search(r"Vergi Dairesi No:\s*(\d+)", text),
-        "TicariUnvan": re.search(r"Ticari Ünvan:\s*(.+)", text),
-        "Tutar": re.search(r"Fatura Tutari:\s*([\d.,]+)", text),
+        "FaturaNo": re.search(r"Seri No:\s*([A-Z0-9]+)", text, re.IGNORECASE),
+        "VergiNo": re.search(r"Vergi No:\s*(\d+)", text, re.IGNORECASE),
+        "MükellefNo": re.search(r"Mükellef No:\s*(\d+)", text, re.IGNORECASE),
+        "MükellefAdi": re.search(r"Mükellef Adi:\s*(.+)", text, re.IGNORECASE),
+        "VergiDairesiNo": re.search(r"Vergi Dairesi No:\s*(\d+)", text, re.IGNORECASE),
+        "TicariUnvan": re.search(r"Ticari Ünvan:\s*(.+)", text, re.IGNORECASE),
+        "Tutar": re.search(r"Fatura Tutari:\s*([\d.,]+)", text, re.IGNORECASE),
     }
 
     return {k: (v.group(1).strip() if v else "Bulunamadı") for k, v in data.items()}
@@ -93,12 +103,26 @@ def save_to_xml(data, output_file="efaturalar.xml"):
     
 if __name__ == "__main__":
     while a:
-        file_path = input("PDF veya resim dosyasının yolunu girin: ")
-
-        if not os.path.exists(file_path):
+        choice = input("Dosya gezgini için 1 terminalden seçmek için 2 çıkmak için q giriniz ").strip()
+        if choice == 'q':
+            print("Çıkılıyor...")
+            break
+        elif choice == '1':
+            file_path = choose_file()
+        elif choice == '2':
+            file_path = input("PDF veya resim dosyasının yolunu girin: ")
+        else:
+            print("Geçersiz seçim! Lütfen 1, 2 veya q girin.")
+            
+        if not file_path:
+            print("Dosya seçilmedi!")
+            continue
+        elif not os.path.exists(file_path):
             print("Dosya bulunamadı!")
+            continue
         elif os.path.isdir(file_path):
             print("HATA: Lütfen dosyanın tam yolunu girin, klasör değil.")
+            continue
         else:
             print("[*] Fatura okunuyor...")
             text = read_invoice(file_path)

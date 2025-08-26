@@ -1,15 +1,6 @@
 <?xml version="1.0" ?>
 <Invoices>
   <EInvoice>
-    <FaturaNo>DCB234</FaturaNo>
-    <VergiNo>4526563526</VergiNo>
-    <MükellefNo>92423</MükellefNo>
-    <MükellefAdi>bill the builder</MükellefAdi>
-    <VergiDairesiNo>021</VergiDairesiNo>
-    <TicariUnvan>bill logistic</TicariUnvan>
-    <Tutar>10000.50</Tutar>
-  </EInvoice>
-  <EInvoice>
     <FaturaNo>ABC123</FaturaNo>
     <VergiNo>1234567890</VergiNo>
     <MükellefNo>987654</MükellefNo>
