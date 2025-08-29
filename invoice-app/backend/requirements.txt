@@ -1,8 +1,0 @@
-fastapi
-uvicorn[standard]
-python-multipart
-pytesseract
-Pillow
-pdf2image
-pdfplumber
-lxml

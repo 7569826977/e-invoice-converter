@@ -1,0 +1,235 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+}
+body {
+  animation: renkDegistir 5s infinite alternate;
+}
+
+h1{
+    color: #390089;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    margin-top: 10x;
+}
+img{
+    
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    width: 120px;
+    height: 120px;
+}
+video{
+    
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    border-radius: 40%;;
+    
+    height: 70%;
+    
+}
+
+.element {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5%;           /* sayfanın üst %10’unda ortalama konum */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: hareket 10s ease-in-out infinite alternate, donme 3s linear infinite;
+    z-index: 10;
+}
+
+@keyframes hareket {
+    0%   { left: 10%; }
+    50%  { left: 90%; }
+    100% { left: 10%; }
+}
+
+@keyframes donme {
+    0%   { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+
+
+.container{
+    display: flex;
+    width: 100%;
+    height: 90%;
+    margin-top: 2.5%;
+    margin-bottom: 15%;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    
+    overflow: hidden;
+    position: relative;
+    animation: renkDegistir 5s infinite alternate reverse;
+    animation-delay: 1s;
+}
+
+.inside{
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    font-size: 1.5em;
+    width: 80%;
+    height: 80%;
+    
+}
+
+button {
+    font-size:0.7em;
+    font-style: bold;
+    border: none;
+    background:#06fdd8;
+    padding: 0.8em 2.5em;
+    border-radius: 100px;
+    color:rgb(26, 1, 47);
+    font-family:Poppins;
+    font-weight: 500;
+    cursor:pointer;
+    transition: 170ms ease, transform 0.3s ease;
+    position: relative; /* Sparkle için gerekli */
+    overflow: hidden;   /* Taşmayı önler */
+    z-index: 1;
+}
+button:hover{
+    background-color: #00ef93;
+    transform: scale(1.5);
+}
+/* Sparkle efekti için pseudo-element */
+button::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 100px;
+    background: linear-gradient(45deg,
+        #facc15, #f472b6, #60a5fa, #34d399, #facc15);
+    background-size: 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: sparkle 3s linear infinite;
+}
+
+/* Hover olduğunda parıldama aktif olsun */
+button:hover::before {
+    opacity: 1;
+}
+
+
+.sparkle_input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 45%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #7fbe01;
+    position: relative;
+    z-index: 1;
+}
+.sparkle_input::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 5px;
+    background: linear-gradient(45deg,
+        #facc15, #f472b6, #60a5fa, #34d399, #facc15);
+    background-size: 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: sparkle 3s linear infinite;
+}
+
+/* Hover olduğunda parıltı aktifleşsin */
+.sparkle_input:hover::before {
+    opacity: 1;
+}
+.sparkle_input:hover{
+    cursor: pointer;
+}
+@keyframes sparkle {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes renkDegistir {
+  0% { background-color: #ff9a9e; }
+  25% { background-color: #fad0c4; }
+  50% { background-color: #a1c4fd; }
+  75% { background-color: #c2e9fb; }
+  100% { background-color: #ff9a9e; }
+}
+
+
+
+.element-alt {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 5%;          /* alt %10 civarında */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: hareket-alt 10s ease-in-out infinite alternate, donme-alt 3s linear infinite;
+    z-index: 10;
+}
+
+@keyframes hareket-alt {
+    0%   { left: 90%; }
+    50%  { left: 10%; }
+    100% { left: 90%; }
+}
+
+@keyframes donme-alt {
+    0%   { transform: translateX(-50%) rotate(360deg); }
+    100% { transform: translateX(-50%) rotate(0deg); }
+}
+#preview{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    height:60%;
+    justify-content: center;
+    padding-left: 10%;
+
+}
